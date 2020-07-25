@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/Content/images/global-autotech.png" align="left" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        <li><b>@Html.ActionLink("Enterprise Task Management", "Admin", "EmployeeDetails", new { area = "" }, new { @class = "navbar-brand", @style = "color:#222;font-size: 16px;" })</b></li>
+                    }
+                    else
+                    {
+                        <li><b>@Html.ActionLink("Enterprise Task Management", "ViewProjects", "Initiator", new { area = "" }, new { @class = "navbar-brand", @style = "color:#222;font-size: 16px;" })</b></li>
+                        <li>@Html.ActionLink("New Task", "Initiator", "Initiator", null, new { @style = "color:#222;font-weight:bold;margin-left:40px;" })</li>
+                    }
+                </ul>
+                <!-- Navbar-->
+                <ul class="nav navbar-nav ml-auto ml-md-0 navbar-right">
+                    <li class="nav-item dropdown">
+                        @if (Session["Role"].ToString() != "Admin")
+                        {
+                            <a class="nav-link dropdown-toggle" style="margin-top:-11px;margin-left:5px;color:#222;font-size:15px;" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span><b> @Html.DisplayFor(model => @TempData["DisplayName"]) </b></span>
+                                @*<i class="fas fa-user fa-fw"></i>*@
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link dropdown-toggle" style="margin-top:-11px;margin-left:5px;color:#222;font-size:15px;" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span><b> Welcome Application Admin </b></span>
+                                @*<i class="fas fa-user fa-fw"></i>*@
+                            </a>
+                        }
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" style="margin-left:19px;" href="/Initiator/LogOff">Logout</a><br>
+                                <a class="dropdown-item" style="margin-left:19px;" href="/EmployeeDetails/ChangePassword">Change Password</a><br>
+                                @if (Session["Role"].ToString() != "Admin")
+                                {
+                                    <a class="dropdown-item" style="margin-left:19px;" href="/EmployeeDetails/UserManual">User Manual</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" style="margin-left:19px;" href="/EmployeeDetails/AdminManual">Admin Manual</a>
+                                }
+                            </div>
+                        </li>
+                </ul>
+                @*<ul class="nav navbar-nav navbar-right">
+                    @if (Session["Role"].ToString() != "Admin")
+                    {
+                        <li>
+                            <span style="color:#222;font-size:15px;"><b>&nbsp;&nbsp;@Html.DisplayFor(model => @TempData["DisplayName"]) !&nbsp;&nbsp;@Html.ActionLink("Logout", "LogOff", "Initiator", new { }, new { @style = "color:#fff;" })</b></span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <span style="color:#222;font-size:15px;"><b>&nbsp;&nbsp;Welcome Application Admin !&nbsp;&nbsp;@Html.ActionLink("Logout", "LogOff", "Initiator", new { }, new { @style = "color:#fff;" })</b></span>
+                        </li>
+                    }
+                </ul>*@
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr style="border-top: 1px solid #333;" />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - TASMAY INNOVATIONS TECHNOLOGY TOOLS LLP.</p>
+        </footer>
+    </div>
+</body>
+</html>

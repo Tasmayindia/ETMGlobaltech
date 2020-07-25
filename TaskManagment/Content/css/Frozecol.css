@@ -1,0 +1,112 @@
+﻿/* code for KraPresentation column Freeze*/
+#container
+{
+	margin:10px 50px 10px 50px;
+	overflow: scroll;
+	width: 795px;
+	/*height:500px;*/
+	/*border-left: 1px black solid;*/
+	border:1px solid #6AAEE4;
+	overflow-y: hidden;
+	margin-bottom: 10px;
+	background:#fff;
+}
+#dataTable
+{
+	border-collapse: collapse;
+	/*border: black 1px solid;*/
+	width: 100%;
+	background-color: #fff;
+}
+#dataTable .ColFreeze
+{
+	background-color: #E4E4E4;
+	border: #fff 0.5 mm solid;
+	left: expression(this.offsetParent.scrollLeft-1);
+	Z-INDEX: 0;
+
+	position: relative;
+	
+}
+#dataTable .HColFreeze{
+	background-color: #6AAEE4;
+	border: #fff 0.5 mm solid;
+	left: expression(this.offsetParent.scrollLeft-1);
+	Z-INDEX: 0;
+
+	position: relative;
+}
+#dataTable td{
+	white-space: normal;
+	border-left : 1px silver solid;
+	padding: 0px;
+	height:100%;
+	vertical-align:middle ;
+}
+#TblSub tr td
+{
+	border-bottom:1px #fff solid;
+}
+#TranTable td
+{
+	white-space: normal;
+	border-right :1px solid silver;
+	cursor:hand;
+	padding: 0px;
+	height:100%;
+	vertical-align:middle ;
+}
+#DivTarget{
+	width:100px; 
+	height:50px; 
+	text-align:center;
+	/* overflow:auto;*/
+	margin-top:15px;
+}
+#divHeading
+{
+	width:100px; 
+	height:40px; 
+	text-align:center
+}
+.Rheading
+{
+	background-color:#6AAEE4; height:24px; color:#FFFFFF;
+}
+#MonHead
+{
+	width:100px; 
+	height:25px; 
+	text-align:center;
+	margin-top:15px
+}
+.hyperlink
+{
+	cursor:hand;
+	color:#000;
+}
+	
+/* following code is for fileUpload page*/
+	
+.confirm{
+	position:absolute;
+	top:150px;
+	left:300px;
+	background:#ccc;
+	padding:10px;
+	width:250px;
+	height:150px;
+	border:solid thin #666;
+	text-align:center;
+}
+#fileList table tr td
+{
+	border: solid 0.01mm #ccc;
+	margin:0;
+	padding:8px;
+}
+.pnlUpload
+{
+	float:left;
+	margin-left:75px;
+}

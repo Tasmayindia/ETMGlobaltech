@@ -1,0 +1,149 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Initiator";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.4.js"></script>
+    <script>
+        var $jq = jQuery.noConflict();
+    </script>
+    <script type="text/javascript">
+        $jq(document).ready(function ()
+        {
+            $jq("#ExpectedTargetDate").attr("readonly", "disabled");
+            $jq("#ExpectedTargetDate").datepicker({
+                minDate: -0,
+                dateFormat: 'dd-mm-yy',
+
+            });
+        });
+        function checkDoerName()
+        {
+            var DoerName1 = document.getElementById("DoerName1").value;
+            document.getElementById("DoerNameGalaxy").value = DoerName1;
+        };
+        function OnSubmit()
+        {
+            var ProjectName = document.getElementById("ProjectName").value;
+            var ExpectedTargetDate = document.getElementById("ExpectedTargetDate").value;
+            var DoerName1 = document.getElementById("DoerName1").value;
+            
+            if (ProjectName != "" && ExpectedTargetDate != "" && DoerName1!="")
+            {
+               $("#divLoading").show();
+                var ajaxLoading = "<img id='ajax-loader' src='@Url.Content("~/Content/images/Processing.gif")' align='center' height='100' width='100'>";
+                $("#divLoading").html("<p style='position: absolute; top: 43%; left: 48%; color:  #666666;'>" + ajaxLoading + "</p>");
+            }
+            
+        };
+    </script>
+    <title></title>
+</head>
+<body>
+    <div class="panel panel-default" style="margin-top:8px;">
+        <div style="font-size:18px;color:black;margin-top:5px;"><center><b>New Task</b></center></div>
+        @{using (Html.BeginForm("Initiator", "Initiator", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label for="ProjectName" class="col-form-label">Task Name: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Enter Task Name here.." })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.ProjectNo)
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="ProjectDescription" class="col-form-label">Task Description:</label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Task Description here.." })
+                            @*<br>
+                                @Html.ValidationMessageFor(model => model.ProjectDescription, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label for="ExpectedOutput1" class="col-form-label">Expected Output :</label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Expected Output here.." })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.ExpectedOutput1, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.ExpectedTargetDate, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "dd-mm-yyyy" })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.ExpectedTargetDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label for="DoerName1" class="col-form-label">Assignee (Doer): <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                        </div>
+                        <div class="col-lg-4">
+
+                            @Html.DropDownListFor(model => model.DoerName1, @Model.AssigneeList, "--Select--", new { @class = "form-control", @style = "display:inline-block;", @onchange = "checkDoerName();" })
+                            @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.DoerName1, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="ReviewBy" class="col-form-label">Review By:</label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.ReviewBy, new { @class = "form-control", @readonly = "readonly" })
+                            @*@Html.DropDownListFor(model => model.ReviewBy, @Model.AssigneeList, "--Select--", new { @class = "form-control", @style = "display:inline-block;" })*@
+                            @Html.HiddenFor(model => model.ReviewByGalaxy, new { id = "ReviewByGalaxy" })
+                            @*<br>
+                                @Html.ValidationMessageFor(model => model.ReviewBy, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label for="InitiatorRemark" class="col-form-label">Remark :</label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextAreaFor(model => model.InitiatorRemark, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Enter Remark here.." })
+
+                            @*<br>
+                                @Html.ValidationMessageFor(model => model.InitiatorRemark, "", new { @class = "text-danger" })*@
+
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12" align="center">
+                            <input type="submit" name="Submit" value="Create Task" class="btn btn-info" id="btnSubmit" onclick="OnSubmit();">
+                            <button class="btn btn-info"> @Html.ActionLink("Back", "Initiator", new { Back = "Back" }, new { @style = "color:white;" })</button>
+                            @*<input type="submit" value="Back" name="Back" class="btn btn-info">*@
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => Model.EmpCode, new { id = "EmpCode" })
+                    @Html.HiddenFor(model => Model.GalaxyID)
+                </div>
+            }
+        }
+    </div>
+    <div id="divLoading" style="margin: 0px;padding: 0px; position: fixed; right: 0px;
+  top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;align-content:center;
+  opacity: .8; filter: alpha(opacity=70);display:none;" align="center" margin-top="50%">
+    </div>
+</body>
+</html>

@@ -1,0 +1,1354 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Initiator";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.4.js"></script>
+    <script>
+        // Give $ back to prototype.js; create new alias to jQuery.
+        var $jq = jQuery.noConflict();
+    </script>
+    <script type="text/javascript">
+        
+        $jq(document).ready(function () {
+            $jq("#btnExcept").show();
+            $jq("#btnDelegate").hide();
+            $jq("#GetDate").datepicker({
+                dateFormat: 'dd-mm-yy',
+            });
+
+            $jq("#ExpectedTargetDate").attr("readonly", "disabled");
+            $jq("#ExpectedTargetDate").datepicker({
+                minDate: -0,
+                dateFormat: 'dd-mm-yy',
+
+            });
+            $jq("#ProposedDate").datepicker({
+                minDate: -0,
+                dateFormat: 'dd-mm-yy',
+
+            });
+            $jq("#AgreedDate").datepicker({
+                dateFormat: 'dd-mm-yy',
+
+            });
+        });
+        function checkDoerName() {
+            var DoerName1 = document.getElementById("DoerName1").value;
+            //alert(DoerName1);
+            document.getElementById("DoerNameGalaxy").value = DoerName1;
+        };
+        function checkDelegateTo()
+        {
+            var DelegateTo = document.getElementById("DelegateToGalaxy1").value;
+            var DelegateTo1 = document.getElementById("DelegateTo1").value;
+            if (DelegateTo == DelegateTo1)
+            {
+                $jq("#btnExcept").show();
+                $jq("#btnDelegate").hide();
+                $jq("#ProposedDate").datepicker({
+                    minDate: -0,
+                    dateFormat: 'dd-mm-yy',
+                });
+
+            } else
+            {
+                $jq("#btnExcept").hide();
+                $jq("#btnDelegate").show();
+                $jq("#ProposedDate").datepicker("destroy");
+               
+            }
+            document.getElementById("DelegateToGalaxy").value = DelegateTo1;
+        };
+    </script>
+    <script type="text/javascript">
+        $jq(function () {
+            if (document.getElementById("InitiatorStatus") != null) {
+                if ($jq('input[id=InitiatorStatus]')[0].checked == true) {
+                    var Status = $('input[id=InitiatorStatus]')[0].val();
+                    if (Status == "Transfer") {
+                        $jq("#idddlTransfer").show();
+                    }
+                }
+                else {
+                    $jq("#idddlTransfer").hide();
+                }
+            }
+            else {
+                $jq("#idddlTransfer").hide();
+            }
+        });
+        function checkedChangedTransfer(a) {
+
+            if (a.id == "idTransfer") {
+                if (a.checked == true) {
+                    $jq("#idddlTransfer").show();
+                }
+                else {
+                    $jq("#idddlTransfer").hide();
+                }
+            }
+            else { $jq("#idddlTransfer").hide(); }
+
+        }
+        function OnSubmit()
+        {
+           $("#divLoading").show();
+           var ajaxLoading = "<img id='ajax-loader' src='@Url.Content("~/Content/images/Processing.gif")' align='center' height='100' width='100'>";
+           $("#divLoading").html("<p style='position: absolute; top: 43%; left: 48%; color:  #666666;'>" + ajaxLoading + "</p>");
+        };
+    </script>
+    <title></title>
+</head>
+<body>
+    @{using (Html.BeginForm("edit", "Initiator", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="panel panel-default" style="margin-top:8px;">
+                <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Edit Task</b></center></div>
+                @if (Model.NextStatus == 1)
+                {
+                    if (Model.Role == "Initiator")
+                    {
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectNo" class="col-form-label">Task No:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => Model.ProjectNo, null, new { @style = "display:inline-block;" })
+                                    @Html.HiddenFor(model => model.ProjectNo)
+
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReqStatus" class="col-form-label">Status :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReqStatus)
+
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectName" class="col-form-label">Task Name: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ProjectName)*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ProjectDescription" class="col-form-label">Task Description:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ProjectDescription)*@
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ExpectedOutput1" class="col-form-label">Expected Output:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ExpectedOutput1)*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.ExpectedTargetDate, new { @readonly = "readonly", @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ExpectedTargetDate)*@
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DoerName1" class="col-form-label">Assignee (Doer): <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.DoerName1, @Model.AssigneeList1, "--Select--", new { @class = "form-control", @style = "display:inline-block;", @onchange = "checkDoerName();" })
+                                    @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })
+                                    @*@Html.TextBoxFor(model => model.DoerName1, new { @class = "form-control", @style = "display:inline-block;", @readonly = "readonly" })
+                                    @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReviewBy" class="col-form-label">Review By:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.ReviewBy, new { @readonly = "readonly", @class = "form-control", @style = "display:inline-block;" })
+                                    @Html.HiddenFor(model => model.ReviewByGalaxy, new { id = "ReviewByGalaxy" })
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="InitiatorRemark" class="col-form-label">Remark :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.InitiatorRemark, new { @class = "form-control", @style = "display:inline-block;"})
+                                    @Html.HiddenFor(model => model.InitiatorRemark, new { id = "DoerNameGalaxy" })
+                                </div>
+
+                            </div>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12" align="center">
+                                    <input type="submit" name="Submit" value="Update Task" class="btn btn-info" onclick="OnSubmit();" id="btnSubmit">
+                                    <input type="submit" name="Submit" value="Cancel Task" class="btn btn-info" onclick="OnSubmit();" id="btnSubmit">
+                                    <input type="submit" value="Back" name="Back" class="btn btn-info">
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => Model.EmpCode, new { id = "EmpCode" })
+                            @Html.HiddenFor(model => Model.GalaxyID)
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="InitiatorRemark" class="col-form-label">Logs :</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    @Html.TextAreaFor(model => Model.RemarkTrace, new { @class = "form-control", @style = "height:8em;;background-color: #eee;", @readonly = "readonly" })
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="Initiator" class="col-form-label">Task Details( @Model.Initiator)</label>
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                
+                                <div class="col-lg-2">
+                                    <label for="ProjectNo" class="col-form-label">Task No:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => Model.ProjectNo,new { @style="display:inline-block;"})
+                                    @Html.HiddenFor(model => model.ProjectNo)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReqStatus" class="col-form-label">Status :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReqStatus)
+
+                                </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="InitiatorName" class="col-form-label">Assigneer:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.InitiatorName)
+                                    @Html.HiddenFor(model => model.InitiatorName)
+                                    @Html.HiddenFor(model => model.AddedBy)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReviewBy" class="col-form-label">Review By:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReviewBy)
+                                    @Html.HiddenFor(model => model.ReviewByGalaxy)
+                                    @Html.HiddenFor(model => model.ReviewBy)
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DoerbyName" class="col-form-label">Assignee:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.DoerbyName)
+                                    @Html.HiddenFor(model => model.DoerNameGalaxy)
+                                    @Html.HiddenFor(model => model.DoerbyName)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="DelegateTo" class="col-form-label">Doer:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.DelegateTo)
+                                    @Html.HiddenFor(model => model.DelegateToGalaxy)
+                                    @Html.HiddenFor(model => model.DelegateTo)
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectName" class="col-form-label">Task Name:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ProjectDescription" class="col-form-label">Task Description:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ExpectedOutput1" class="col-form-label">Expected Output:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                    @*@Html.DisplayFor(model => model.ExpectedOutput1)*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ExpectedTargetDate)
+                                </div>
+                            </div>
+                            <br>
+
+                            @if (Model.Role == "Doer")
+                            {
+                               
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProposedDate" class="col-form-label">Proposed Date:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.TextBoxFor(model => model.ProposedDate, new { @readonly = "readonly", @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ProposedDate)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="DelegateTo" class="col-form-label">Delegate To:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                        <select id="DelegateTo1" name="DelegateTo" class="form-control" style="display:inline-block;" onchange="checkDelegateTo();">
+                                            @for (int i = 0; i < Model.AssigneeList.Count(); i++)
+                                            {
+                                                <option value="@Model.AssigneeList[i].Value">@Model.AssigneeList[i].Text</option>
+                                            }
+                                        </select>
+                                        @Html.HiddenFor(model => model.DelegateToGalaxy, new { id = "DelegateToGalaxy1" })
+                                        @Html.HiddenFor(model => model.DelegateToGalaxy, new { id = "DelegateToGalaxy" })
+                                    </div>
+                                    
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProposedDateRemark" class="col-form-label">Remark:</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        @Html.TextAreaFor(model => model.ProposedDateRemark, new { @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ProposedDateRemark)
+                                    </div>
+                                </div>
+                                <br>
+                            }
+                            <div class="row">
+                                <div class="col-lg-12" align="center">
+                                    @if (Model.Role == "Doer")
+                                    {
+                                        <input type="submit" name="Submit" value="Accept Task" id="btnExcept"  onclick="OnSubmit();" class="btn btn-info">
+                                        <input type="submit" name="Submit" value="Accept & Delegate Task" id="btnDelegate" onclick="OnSubmit();" class="btn btn-info">
+                                    }
+                                    <input type="submit" value="Back" name="Back" class="btn btn-info">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="RemarkTrace" class="col-form-label">Logs :</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    @Html.TextAreaFor(model => Model.RemarkTrace, new { @class = "form-control", @style = "display:inline-block;height:8em;color:gray;background-color: #eee;", @readonly = "readonly" })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                }
+                else if (Model.NextStatus == 2)
+                {
+                    if (Model.Role == "Initiator")
+                    {
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectNo" class="col-form-label">Task No:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => Model.ProjectNo)
+                                    @Html.HiddenFor(model => model.ProjectNo)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReqStatus" class="col-form-label">Status :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReqStatus)
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectName" class="col-form-label">Task Name:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ProjectName)*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ProjectDescription" class="col-form-label">Task Description:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ProjectDescription)*@
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ExpectedOutput1" class="col-form-label">Expected Output:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ExpectedOutput1)*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.ExpectedTargetDate, new { @readonly = "readonly", @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.ExpectedTargetDate)*@
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DoerName1" class="col-form-label">Assignee (Doer):</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.DoerName1, @Model.AssigneeList1, "--Select--", new { @class = "form-control", @style = "display:inline-block;", @onchange = "checkDoerName();" })
+                                    @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReviewBy" class="col-form-label">Review By:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.ReviewBy, new { @class = "form-control", @style = "display:inline-block;", @readonly = "readonly" })
+                                    @Html.HiddenFor(model => model.ReviewByGalaxy, new { id = "ReviewByGalaxy" })
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="InitiatorRemark" class="col-form-label">Remark:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.InitiatorRemark, new { @class = "form-control", @style = "display:inline-block;" })
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12" align="center">
+                                    <input type="submit" name="Submit" value="Update Task" class="btn btn-info" onclick="OnSubmit();" id="btnSubmit">
+                                    <input type="submit" name="Submit" value="Cancel Task" class="btn btn-info" onclick="OnSubmit();" id="btnSubmit">
+                                    <input type="submit" value="Back" name="Back" class="btn btn-info">
+                                </div>
+                                @Html.HiddenFor(model => Model.EmpCode, new { id = "EmpCode" })
+                                @Html.HiddenFor(model => Model.GalaxyID)
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="Doer" class="col-form-label">Task Details( @Model.Doer)</label>
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProposedDate" class="col-form-label">Proposed Date :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ProposedDate)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="DelegateTo" class="col-form-label">Delegate To:</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.DelegateTo)
+                                </div>
+                            </div>
+                            <br>
+                            @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="attachment1" class="col-form-label">Attachment:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                                    </div>
+
+                                </div>
+                                <br>
+                            }
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="RemarkTrace" class="col-form-label">Logs :</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    @Html.TextAreaFor(model => Model.RemarkTrace, new { @class = "form-control", @style = "display:inline-block;height:8em;color:gray;background-color: #eee;", @readonly = "readonly" })
+                                </div>
+
+                            </div>
+                            <br>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="attachment1" class="col-form-label">Task Details ( @Model.Initiator ) </label>
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectNo" class="col-form-label">Task No :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => Model.ProjectNo)
+                                    @Html.HiddenFor(model => model.ProjectNo)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReqStatus" class="col-form-label">Status :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReqStatus)
+
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="InitiatorName" class="col-form-label">Assigneer :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.InitiatorName)
+                                    @Html.HiddenFor(model => model.InitiatorName)
+                                    @Html.HiddenFor(model => model.AddedBy)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ReviewBy" class="col-form-label">Review By : </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ReviewBy)
+                                    @Html.HiddenFor(model => model.ReviewByGalaxy)
+                                    @Html.HiddenFor(model => model.ReviewBy)
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DoerbyName" class="col-form-label">Assignee :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.DoerbyName)
+                                    @Html.HiddenFor(model => model.DoerNameGalaxy)
+                                    @Html.HiddenFor(model => model.DoerbyName)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="DelegateTo" class="col-form-label">Doer : </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.DelegateTo)
+                                    @Html.HiddenFor(model => model.DelegateToGalaxy)
+                                    @Html.HiddenFor(model => model.DelegateTo)
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProjectName" class="col-form-label">Task Name :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ProjectDescription" class="col-form-label">Task Description : </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "height:auto;border:none:background-color:#fff;", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ExpectedOutput1" class="col-form-label">Expected Output :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "height:auto;border:none:background-color:#fff;", @readonly = "readonly" })
+                                    
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date : </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ExpectedTargetDate)
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="ProposedDate" class="col-form-label">Proposed Date :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.ProposedDate)
+                                    @Html.HiddenFor(model => model.DelegateTo)
+                                    @Html.HiddenFor(model => model.DelegateToGalaxy)
+                                </div>
+
+                            </div>
+                            <br>
+                            @if (!(string.IsNullOrEmpty(Model.ReviewStatus)))
+                            {
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Status" class="col-form-label">Task Status (Doer) :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.Label("Completed")
+                                </div>
+                                @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                                {
+                                    <div class="col-lg-2">
+                                        <label for="attachment1" class="col-form-label">Attachment :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                                    </div>
+                                }
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Status" class="col-form-label">Task Status (Reviewer) :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.Label(@Model.ReviewStatus)
+                                </div>
+
+                            </div>
+                            <br>
+                            }
+                            @if ((Model.Role == "Doer") && (Model.pendingforGalaxy.Contains(Model.GalaxyID)) && ((Model.DelegateToGalaxy == Model.DoerName1) || (Model.DelegateToGalaxy != Model.DoerName1)))
+                            {
+                           
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DoerStatus" class="col-form-label">Select Status of Task :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => Model.DoerStatus, new List<SelectListItem>{
+                                   //new SelectListItem() {Text = "", Value=""},
+                                   new SelectListItem() {Text = "Pending", Value="Pending"},
+                                   new SelectListItem() {Text = "Completed", Value="Completed"}}, new { @class = "form-control search", @style = "display:inline-block;" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="doerAttachment" class="col-form-label">Attachment :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.doerAttachment, new { type = "file", @id = "RefDoc", @class = "form-control", @style = "display:inline-block;" })
+                                    @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                                    {
+
+                                        @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                                    }
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Remark" class="col-form-label">Remark :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @Html.ValidationMessageFor(model => model.Remark)
+                                </div>
+
+                            </div>
+                            <br>
+
+                            }
+                            @if (Model.Role == "Delegate")
+                            {
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Doer" class="col-form-label">Doer :</label>
+                                </div>
+                                <div class="col-lg-4">
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="DelegateStatus" class="col-form-label">Select Status of Task :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => Model.DelegateStatus, new List<SelectListItem>{
+                                   new SelectListItem() {Text = "", Value=""},
+                                   new SelectListItem() {Text = "Pending", Value="Pending"},
+                                   new SelectListItem() {Text = "Completed", Value="Completed"}}, new { @class = "form-control search", @style = "display:inline-block;" })
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Remark" class="col-form-label">Remark :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @Html.ValidationMessageFor(model => model.Remark)
+                                </div>
+
+                            </div>
+                            <br>
+
+                            }
+                            <div class="row">
+                                <div class="col-lg-12" align="center">
+
+                                    @if (Model.Role == "Delegate")
+                                    {
+                                        <input type="submit" value="Submit" name="Submit" id="btnSubmit" onclick="OnSubmit();"  class="btn btn-info" />
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+                                    }
+                                    else if ((Model.Role == "Doer") && (Model.pendingforGalaxy.Contains(Model.GalaxyID)) && ((Model.DelegateToGalaxy == Model.DoerName1) || (Model.DelegateToGalaxy != Model.DoerName1)))
+                                    {
+                                        <input type="submit" value="Submit" name="Submit" id="btnSubmit" onclick="OnSubmit();"  class="btn btn-info" />
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+                                    }
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="RemarkTrace" class="col-form-label">Logs :</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    @Html.TextAreaFor(model => Model.RemarkTrace, new { @class = "form-control", @style = "display:inline-block;height:8em;color:gray;background-color: #eee;", @readonly = "readonly" })
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                 
+                    }
+                    
+                }
+                else if (Model.NextStatus == 3)
+                {
+                   <div class="panel-body">
+                            @if (Model.Role == "Initiator")
+                            {
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProjectNo" class="col-form-label">Task No :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => Model.ProjectNo)
+                                        @Html.HiddenFor(model => model.ProjectNo)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ReqStatus" class="col-form-label">Status :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ReqStatus)
+                                       
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProjectName" class="col-form-label">Task Name :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                         @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                        @*@Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ProjectName)*@
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ProjectDescription" class="col-form-label">Task Description :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                        @*@Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ProjectDescription)*@
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ExpectedOutput1" class="col-form-label">Expected Output :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                         @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                        @*@Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ExpectedOutput1)*@
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ExpectedTargetDate)
+                                        @*@Html.TextBoxFor(model => model.ExpectedTargetDate, new { @readonly = "readonly", @class = "form-control", @style = "display:inline-block;" })
+                                        @Html.ValidationMessageFor(model => model.ExpectedTargetDate)*@
+                                    </div>
+                                </div>
+                                <br>
+                               
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="DoerName1" class="col-form-label">Assignee (Doer) :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                         @Html.DisplayFor(model => model.DoerName1)
+                                        @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })
+                                        @*@Html.TextBoxFor(model => model.DoerName1, new { @class = "form-control", @style = "display:inline-block;", @readonly = "readonly" })
+                                        @Html.HiddenFor(model => model.DoerNameGalaxy, new { id = "DoerNameGalaxy" })*@
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ReviewBy" class="col-form-label">Review By :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.DoerName1)
+                                        @*@Html.TextBoxFor(model => model.ReviewBy, new { @class = "form-control", @style = "display:inline-block;", @readonly = "readonly" })*@
+                                        @Html.HiddenFor(model => model.ReviewByGalaxy, new { id = "ReviewByGalaxy" })
+                                    </div>
+                                </div>
+                                <br>
+                                
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="InitiatorRemark" class="col-form-label">Remark :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.DoerName1)
+                                        @*@Html.TextAreaFor(model => model.InitiatorRemark, new { @class = "form-control", @style = "display:inline-block;" })*@
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    @*<div class="col-lg-12" align="center">
+                                        <input type="submit" value="Update Task" name="Submit" id="btnSubmit" onclick="return validateTaskdetails();" class="btn btn-info" />
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+
+                                    </div>*@
+                                    @Html.HiddenFor(model => Model.EmpCode, new { id = "EmpCode" })
+                                    @Html.HiddenFor(model => Model.GalaxyID)
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label for="Doer" class="col-form-label">Task Details ( @Model.Doer)</label>
+                                        
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProposedDate" class="col-form-label">Proposed Date :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ProposedDate)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="DelegateTo" class="col-form-label">Delegate To :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.DelegateTo)
+                                    </div>
+                                </div>
+                                <br>
+                            
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="DelegateStatus" class="col-form-label">Task Status (Doer) :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @if (!(string.IsNullOrEmpty(Model.DelegateStatus)))
+                                        {
+                                            @Html.DisplayFor(model => model.DelegateStatus)
+
+                                        }
+                                        else if (!(string.IsNullOrEmpty(Model.DoerStatus)))
+                                        {
+                                            @Html.DisplayFor(model => model.DoerStatus)
+                                           
+                                        }
+                                    </div>
+                                    @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                                    {
+                                        <div class="col-lg-2">
+                                            <label for="attachment1" class="col-form-label">Attachment:</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                                        </div>
+                                    }
+                                </div>
+                                <br>
+                                
+                                @if (!(string.IsNullOrEmpty(Model.ReviewStatus)))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label for="ReviewStatus" class="col-form-label">Task Status (Reviewer):</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.Label(@Model.ReviewStatus)
+                                        </div>
+                                    </div>
+                                    <br>
+                                }
+
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label for="ReviewStatus" class="col-form-label">Task Details (@Model.Initiator ):</label>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProjectNo" class="col-form-label">Task No:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => Model.ProjectNo)
+                                        @Html.HiddenFor(model => model.ProjectNo)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ReqStatus" class="col-form-label">Status :</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ReqStatus)
+
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="InitiatorName" class="col-form-label">Assigneer:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.InitiatorName)
+                                        @Html.HiddenFor(model => model.InitiatorName)
+                                        @Html.HiddenFor(model => model.AddedBy)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ReviewBy" class="col-form-label">Review By</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ReviewBy)
+                                        @Html.HiddenFor(model => model.ReviewByGalaxy)
+                                        @Html.HiddenFor(model => model.ReviewBy)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="DoerbyName" class="col-form-label">Assignee:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.DoerbyName)
+                                        @Html.HiddenFor(model => model.DoerNameGalaxy)
+                                        @Html.HiddenFor(model => model.DoerbyName)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="DelegateTo" class="col-form-label">Doer:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.DelegateTo)
+                                        @Html.HiddenFor(model => model.DelegateToGalaxy)
+                                        @Html.HiddenFor(model => model.DelegateTo)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ProjectName" class="col-form-label">Task Name:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ProjectDescription" class="col-form-label">Task Description:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ExpectedOutput1" class="col-form-label">Expected Output:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ExpectedTargetDate)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ExpectedTargetDate)
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="ProposedDate" class="col-form-label">Proposed Date:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        @Html.DisplayFor(model => model.ProposedDate)
+                                        @Html.HiddenFor(model => model.DelegateTo)
+                                        @Html.HiddenFor(model => model.DelegateToGalaxy)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="DelegateStatus" class="col-form-label">Task Status (Doer)</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        @if (!(string.IsNullOrEmpty(Model.DelegateStatus)))
+                                        {
+                                            @Html.DisplayFor(model => model.DelegateStatus)
+
+                                        }
+                                        else if (!(string.IsNullOrEmpty(Model.DoerStatus)))
+                                        {
+                                            @Html.DisplayFor(model => model.DoerStatus)
+                                            
+                                        }
+                                    </div>
+
+                                </div>
+                                <br>
+                                @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label for="attachment1" class="col-form-label">Attachment</label>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                }
+                                @if (!(string.IsNullOrEmpty(Model.ReviewStatus)))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label for="ReviewStatus" class="col-form-label">Task Status (Reviewer)</label>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            @Html.Label(@Model.ReviewStatus)
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                }
+                            </div>
+                            }
+                            @if ((Model.Role == "Review" || Model.AddedBy == Model.ReviewByGalaxy) && (Model.pendingforGalaxy.Contains(Model.GalaxyID)))
+                            {
+                            
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="Review" class="col-form-label">Select Status of Task :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => Model.ReviewStatus, new List<SelectListItem>{
+                                                 new SelectListItem() {Text = "--Select--", Value=""},
+                                                 new SelectListItem() {Text = "Verified", Value="Verified"},
+                                                 new SelectListItem() {Text = "Not Completed", Value="Not Completed"}
+                                  }, new { @class = "form-control search", @style = "display:inline-block;" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="Remark" class="col-form-label">Remark :</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", @style = "display:inline-block;" })
+                                    @*@Html.ValidationMessageFor(model => model.Remark)*@
+                                </div>
+                            </div>
+                            <br>
+                            }
+                            <div class="row">
+                               <div class="col-lg-12" align="center">
+                                    @if ((Model.Role == "Review" || Model.AddedBy == Model.ReviewByGalaxy) && (Model.pendingforGalaxy.Contains(Model.GalaxyID)))
+                                    {
+                                        <input type="submit" value="Submit" name="Submit" id="btnSubmit" onclick="OnSubmit();" class="btn btn-info" />
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Back" name="Back" class="btn btn-info" />
+                                    }
+                              </div>
+                            </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="RemarkTrace" class="col-form-label">Logs :</label>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        @Html.TextAreaFor(model => Model.RemarkTrace, new { style = "display:inline-block;height:8em;color:gray;background-color: #eee;", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <br>
+
+                            </div>
+                }
+                else
+                {
+                   <div class="panel-body">
+                       <div class="row">
+                           <div class="col-lg-12">
+                               <label for="Initiator" class="col-form-label">Task Details (@Model.Initiator )</label>
+                           </div>
+
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="ProjectNo" class="col-form-label">Task No:</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => Model.ProjectNo)
+                               @Html.HiddenFor(model => model.ProjectNo)
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="ReqStatus" class="col-form-label">Status :</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.ReqStatus)
+
+                           </div>
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="InitiatorName" class="col-form-label">Assigneer</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.InitiatorName)
+                               @Html.HiddenFor(model => model.InitiatorName)
+                               @Html.HiddenFor(model => model.AddedBy)
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="ReviewBy" class="col-form-label"> Review By</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.ReviewBy)
+                               @Html.HiddenFor(model => model.ReviewByGalaxy)
+                               @Html.HiddenFor(model => model.ReviewBy)
+                           </div>
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="DoerbyName" class="col-form-label">Assignee</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.DoerbyName)
+                               @Html.HiddenFor(model => model.DoerNameGalaxy)
+                               @Html.HiddenFor(model => model.DoerbyName)
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="DelegateTo" class="col-form-label"> Doer</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.DelegateTo)
+                               @Html.HiddenFor(model => model.DelegateToGalaxy)
+                               @Html.HiddenFor(model => model.DelegateTo)
+                           </div>
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="ProjectName" class="col-form-label">Task Name</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="ProjectDescription" class="col-form-label"> Task Description</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                           </div>
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="ExpectedOutput1" class="col-form-label">Expected Output</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.TextAreaFor(model => model.ExpectedOutput1, new { @class = "form-control", @style = "height:auto;", @readonly = "readonly" })
+                           </div>
+
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="ExpectedTargetDate" class="col-form-label">Expected Target Date</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.ExpectedTargetDate)
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="ProposedDate" class="col-form-label">Proposed Date</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.DisplayFor(model => model.ProposedDate)
+                               @Html.HiddenFor(model => model.DelegateTo)
+                               @Html.HiddenFor(model => model.DelegateToGalaxy)
+                           </div>
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="DelegateStatus" class="col-form-label">Task Status (Doer)</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @if (!(string.IsNullOrEmpty(Model.DelegateStatus)))
+                               {
+                                   @Html.DisplayFor(model => model.DelegateStatus)
+
+                               }
+                               else if (!(string.IsNullOrEmpty(Model.DoerStatus)))
+                               {
+                                   @Html.DisplayFor(model => model.DoerStatus)
+                                  
+                               }
+                           </div>
+
+                       </div>
+                       <br>
+                       @if (!(string.IsNullOrEmpty(Model.attachment1)))
+                       {
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="attachment1" class="col-form-label">Attachment</label>
+
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.ActionLink(Model.attachment1, "DownloadAttachment", new { id = Model.ProjectNo })
+                           </div>
+
+                       </div>
+                       <br>
+                       }
+                       @if (!(string.IsNullOrEmpty(Model.ReviewStatus)))
+                       {
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="ReviewStatus" class="col-form-label">Task Status (Reviewer)</label>
+                           </div>
+                           <div class="col-lg-4">
+                               @Html.Label(@Model.ReviewStatus)
+                           </div>
+
+                       </div>
+                       <br>
+                       }
+                       <div class="row">
+                           <div class="col-lg-2">
+                               <label for="RemarkTrace" class="col-form-label">Logs :</label>
+
+                           </div>
+                           <div class="col-lg-10">
+                               @Html.TextAreaFor(model => Model.RemarkTrace, new { style = "display:inline-block;height:8em;color:gray;background-color: #eee;", @class = "form-control", @readonly = "readonly" })
+                           </div>
+
+                       </div>
+                       <br>
+                       <div class="row">
+                           <div class="col-lg-12" align="center">
+
+                               <input type="submit" value="Back" name="Back" class="btn btn-info">
+                           </div>
+                       </div>
+                   </div>
+                }
+            </div>
+            <div id="divLoading" style="margin: 0px;padding: 0px; position: fixed; right: 0px;
+            top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;align-content:center;
+            opacity: .8; filter: alpha(opacity=70);display:none;" align="center" margin-top="50%">
+           </div>
+            @Html.HiddenFor(model => Model.EmpCode)
+            @Html.HiddenFor(model => Model.GalaxyID)
+            @Html.HiddenFor(model => Model.pendingfor)
+            @Html.HiddenFor(model => Model.pendingforGalaxy)
+            @Html.HiddenFor(model => model.DelegateToGalaxy)
+            @Html.HiddenFor(model => model.Role)
+            @Html.HiddenFor(model => Model.NextStatus, new { id = "NextStatus" })
+            @Html.HiddenFor(model => Model.oldExpDate)
+            @Html.HiddenFor(model => Model.oldProposedDate)
+        }
+    }
+</body>
+</html>

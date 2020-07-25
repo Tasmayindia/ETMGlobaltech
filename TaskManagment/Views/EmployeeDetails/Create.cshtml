@@ -1,0 +1,247 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.4.js"></script>
+<script>
+    var $jq = jQuery.noConflict();
+</script>
+<script>
+    $jq(document).ready(function () {
+
+        $jq("#JoinDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
+        $jq("#BirthDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
+        $jq("#ConfirmDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
+    });
+    function CheckEmpCodeExists()
+    {
+        var url = '@Url.Content("~/")' + "EmployeeDetails/CheckEmpCodeExists";
+        var EmpCode = $jq("#EmpCode").val();
+        $jq.post(url, { EmpCode: EmpCode }, function (data) {
+           
+            if (data)
+            {
+                $jq("#EmpCode").val('');
+                alert("EmpCode already in use,Enter new EmpCode!");
+            }
+            else {
+
+            }
+        });
+    }
+    function OnSubmit()
+        {
+        var EmpCode = document.getElementById("EmpCode").value;
+        var Prefix = document.getElementById("Prefix").value;
+        var FName = document.getElementById("FName").value;
+        var LName = document.getElementById("LName").value;
+        var DisplayName = document.getElementById("DisplayName").value;
+        var Department = document.getElementById("Department").value;
+        var Mobile = document.getElementById("Mobile").value;
+        var ReptTo = document.getElementById("ReptTo").value;
+        var Sex = document.getElementById("Sex").value;
+         
+        if (EmpCode != "" && Prefix != "" && FName != "" && LName != "" && DisplayName != "" && Department != "" && Mobile != "" && ReptTo != "" && Sex != "")
+            {
+               $("#divLoading").show();
+                var ajaxLoading = "<img id='ajax-loader' src='@Url.Content("~/Content/images/Processing.gif")' align='center' height='100' width='100'>";
+                $("#divLoading").html("<p style='position: absolute; top: 43%; left: 48%; color:  #666666;'>" + ajaxLoading + "</p>");
+            }
+            
+        };
+</script>
+<div class="panel panel-default" style="margin-top:8px;">
+    @if (ViewBag.Page == "Create")
+    {
+     <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Add Employee Details</b></center></div>
+    }
+    else
+    {
+     <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Update Employee Details</b></center></div>
+    }
+    
+    @{using (Html.BeginForm("Create", "EmployeeDetails", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="panel-body">
+                <div class="row">
+                    @if (ViewBag.Page == "Create")
+                    {
+                        <div class="col-lg-2">
+                            <label for="EmpCode" class="col-form-label">Emp Code: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.EmpCode, new { @class = "form-control", @style = "display:inline-block;", @onblur = "CheckEmpCodeExists();" })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <label for="EmpCode" class="col-form-label">Emp Code: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                        </div>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.EmpCode, new { @class = "form-control", @style = "display:inline-block;",@readonly="readonly" })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.EmpCode, "", new { @class = "text-danger" })
+
+                        </div>
+                    }
+                    <div class="col-lg-2">
+                        <label for="Prefix" class="col-form-label">Prefix: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(m => m.Prefix, new List<SelectListItem>
+                         {
+
+                          new SelectListItem{Text="Mr.", Value="Mr."},
+                          new SelectListItem{Text="Mrs.", Value="Mrs."},
+                          new SelectListItem{Text="Ms.", Value="Ms."}}, "", new { @class = "form-control", @style = "display:inline-block;" })
+                        @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="FName" class="col-form-label">First Name: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.FName, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.FName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="MName" class="col-form-label">Middle Name:</label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.MName, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.MName, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="LName" class="col-form-label">Last Name: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.LName, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.LName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="DisplayName" class="col-form-label">Display Name: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="Department" class="col-form-label">Department:<span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Department, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="Mobile" class="col-form-label">Mobile: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="ReptTo" class="col-form-label">Reporting Manager: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.ReptTo, @Model.EmpList, "", new { @class = "form-control", @style = "display:inline-block;" })
+                        @Html.ValidationMessageFor(model => model.ReptTo, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="Designation" class="col-form-label">Designation:</label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Designation, new { @class = "form-control", @style = "display:inline-block;" })
+
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="Sex" class="col-form-label">Sex: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(m => m.Sex, new List<SelectListItem>
+                          {
+
+                           new SelectListItem{Text="Male", Value="M"},
+                           new SelectListItem{Text="Female", Value="F"}}, "", new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="Email" class="col-form-label">Email: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.EMail, new { @class = "form-control", @style = "display:inline-block;" })
+                        <br>
+                        @Html.ValidationMessageFor(model => model.EMail, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="Location" class="col-form-label">Location:</label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Location, new { @class = "form-control", @style = "display:inline-block;" })
+
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12" align="center">
+
+                        <input type="submit" name="Submit" value="Submit" class="btn btn-info" onclick="OnSubmit();">
+                        <button class="btn btn-info"> @Html.ActionLink("Back", "EmployeeDetails", new { Back = "Back" }, new { @style = "color:white;" })</button>
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<div id="divLoading" style="margin: 0px;padding: 0px; position: fixed; right: 0px;
+  top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;align-content:center;
+  opacity: .8; filter: alpha(opacity=70);display:none;" align="center" margin-top="50%">
+</div>

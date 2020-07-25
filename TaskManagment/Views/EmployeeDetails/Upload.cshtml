@@ -1,0 +1,51 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#divLoading").hide();
+            $("#upload").click(function ()
+            {
+                $("#divLoading").show();
+                var ajaxLoading = "<img id='ajax-loader' src='@Url.Content("~/Content/images/Processing.gif")' align='center' height='100' width='100'>";
+                $("#divLoading").html("<p style='position: absolute; top: 43%; left: 48%; color:  #666666;'>" + ajaxLoading + "</p>");
+            });
+        });
+</script>
+
+<div class="panel panel-default" style="margin-top:8px;">
+    @if (TempData["UploadMsg"] != null)
+    {
+        <p class="alert alert-success" id="successMessage">@TempData["UploadMsg"]</p>
+    }
+    <div style="font-size:18px;color:black"><center><b>Upload Employee Information</b></center></div>
+    @{using (Html.BeginForm("Upload", "EmployeeDetails", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="File" class="col-form-label">Select file:</label>
+                        <br/>
+                        @Html.ActionLink("Download Template", "DownloadTemplate", "EmployeeDetails", new { }, null)
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="file" name="file" class="form-control">
+                        <br />
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="submit" name="Upload" value="Upload" id="upload" class="btn btn-sm btn-info">
+                    </div>
+                    <br/> <br/>
+                </div>
+            </div>
+
+        }
+    }
+</div>
+<div id="divLoading" style="margin: 0px;padding: 0px; position: fixed; right: 0px;
+  top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;align-content:center;
+  opacity: .8; filter: alpha(opacity=70);display:none;" align="center" margin-top="50%">
+</div>

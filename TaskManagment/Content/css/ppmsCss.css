@@ -1,0 +1,9 @@
+﻿body {
+}
+
+#popupmain1
+        {background-color:#FFFFFF; width: 900px ; margin:0 auto; margin-left:20px;}
+#popuptopbar1
+        {position:relative; width: 900px ; margin-left:20px; margin-top:10px; height:auto ; color:#009AF2; background-color:#FFFFFF;}
+#popupfooter1
+        {position:absolute; width: 900px ; margin-left:20px; padding-top:15px; font-size:10px; color:#000000; vertical-align: middle;  height:30px; background-color:#FFFFFF;margin-top:0;}

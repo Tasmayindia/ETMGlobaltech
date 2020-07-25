@@ -1,0 +1,686 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "ViewTransferProject";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<style type="text/css">
+    .webgrid-table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size: 1.1em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 0px black;
+        background-color: white;
+    }
+
+        .webgrid-table td, th {
+            border: 1px solid black;
+            padding: 3px 5px 2px;
+        }
+
+    .webgrid-header {
+        background-color: #6AAEE4;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .webgrid-footer {
+    }
+
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-alternating-row {
+        padding: 3px 7px 2px;
+    }
+
+    .style1 {
+        grid-row-align: center;
+        text-align: left;
+        /*width: 250px;*/
+    }
+
+    .style2 {
+        grid-row-align: center;
+        text-align: left;
+        /*width: 250px;*/
+    }
+
+    .style3 {
+        grid-row-align: center;
+        text-align: center;
+        /*width: 250px;*/
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#AgreedDate1").datepicker({
+            dateFormat: 'dd-M-yy',
+            showOn: "button",
+            buttonText: "DatePicker",
+            buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+            buttonImageOnly: true
+        });
+
+        $("#GetDate").datepicker({
+            dateFormat: 'dd-M-yy',
+            showOn: "button",
+            buttonText: "DatePicker",
+            buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+            buttonImageOnly: true
+        });
+        $("#pop").datepicker({
+            dateFormat: 'dd-M-yy',
+            showOn: "button",
+            buttonText: "DatePicker",
+            buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+            buttonImageOnly: true
+        });
+        $("#expectedtargetdate").datepicker({
+            dateFormat: 'dd-M-yy',
+            showOn: "button",
+            buttonText: "DatePicker",
+            minDate: 0,
+            buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+
+            buttonImageOnly: true
+        });
+
+        $("#ProposedDate").datepicker({
+
+
+            //minDate: (parseInt(Diff("day", $('#ExpectedDate').val(), Date.now()))),
+
+
+
+            dateFormat: 'dd-M-yy',
+            showOn: "button",
+            buttonText: "DatePicker",
+            buttonImage: "/Content/images/calendericon.png",
+            buttonImageOnly: true
+        });
+
+
+        //$("#txtFromDate").datepicker({
+        //    numberOfMonths: 2,
+        //    onSelect: function (selected) {
+        //        $("#txtToDate").datepicker("option", "minDate", selected)
+        //    }
+        //});
+        $("#txtToDate").datepicker({
+            numberOfMonths: 2,
+            onSelect: function (selected) {
+                $("#ExpectedDate").val()("option", "maxDate", selected)
+            }
+        });
+    });
+
+    
+</script>
+
+@using (Html.BeginForm("Initiator", "Initiator", FormMethod.Post))
+{
+    string GalaxyID = Session["GalaxyID"].ToString();
+    string pendingfor = Session["pendingfor"].ToString();
+    <br />
+    <div id="main">
+        <table align="center" border="1" id="tblNewProject">
+            @if (Session["GalaxyID"].ToString().Contains("lshah") && Model.AgreedDate != null)
+            {
+                <table align="center" style="border:1px solid; border-color:#0099ff ; border-spacing :10px; id=" tblnewproject">
+                                        <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ProjectNo, "Project No")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:30em; height:2em;border:none;", @readonly = "readonly" })
+
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.ProjectName, "Project Name")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.ProposedDate, "Proposed Date")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ProposedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.DoerName1, "Assiginee")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.DoerName1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td valign="top">
+                            @Html.LabelFor(model => model.AgreedDate, "Agreed Date Entry")
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.AgreedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top">
+                            <text><b>Select Remark<b></text>
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(model => Model.DoerStatus, "HOLD", true)HOLD
+                            @Html.RadioButtonFor(model => Model.DoerStatus, "COMPLITE")COMPLITE
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="4">
+                            <input type="submit" value="Update_Status_Doer" name="Submit" class="button" id="btnSubmit" />
+                        </td>
+
+                </table>
+            }
+
+            else if (Session["GalaxyID"].ToString().Contains("lshah") && Model.pendingfor != Model.GalaxyID)
+            {
+
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ProjectNo, "Project No")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                 
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectName, "Project Name")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProposedDate, "Proposed Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProposedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+
+
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td align="center" colspan="4">
+                        <input type="submit" value="Back" name="Submit" class="Cancel" />
+                    </td>
+                </tr>
+            }
+            else if (Session["GalaxyID"].ToString().Contains("lshah") && Model.pendingfor == Model.GalaxyID)
+            {
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ProjectNo, "Project No")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectName, "Project Name")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProposedDate, "Proposed Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProposedDate, new { style = "width:18em; height:2em;border:none; ", id = "pop" })
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpDetailpurposedate, "  Explanation for change in proposed Date")
+                      
+                    </td>
+                    <td>
+
+
+                        @Html.TextAreaFor(model => model.ExpDetailpurposedate, new { style = "width:18em; height:2em;", id = "ExpectedOutput1", @placeholder = "Enter Expected Output here.." })
+                        @Html.ValidationMessageFor(model => model.ExpDetailpurposedate)
+  </td>
+                </tr>
+
+
+                <tr>
+                    <td align="center" colspan="4">
+                        <input type="submit" value="Update" name="Submit" class="button" id="btnSubmit" @*onclick="return validaterequestdetails();"*@ />
+                    </td>
+                </tr>
+            }
+
+
+
+        </table>
+
+
+        @* .......................................Initializer block..................................................... *@
+
+
+
+        @if (Session["GalaxyID"].ToString().Contains("tiwaria") && Model.pendingfor.Contains(GalaxyID.ToString()) && Model.AgreedDate != null)
+        {
+            <table align="center" style="border:1px solid; border-color:#0099ff ; border-spacing :10px; id=" tblnewproject">
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ProjectNo, "Project No")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:30em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+               
+                <tr>
+
+              
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectName, "Project Name")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProposedDate, "Proposed Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProposedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.DoerName, "Assiginee")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.DoerName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.AgreedDate, "Agreed Date Entry")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.AgreedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        <text><b>Select Remark<b></text>
+                    </td>
+                    <td>
+                        @Html.RadioButtonFor(model => Model.InitiatorStatus, "Open", true)Open<br />
+                        @Html.RadioButtonFor(model => Model.InitiatorStatus, "Open- Delayed")Open- Delayed<br />
+                        @Html.RadioButtonFor(model => Model.InitiatorStatus, "Closed -On time", true)Closed -On time<br />
+                        @Html.RadioButtonFor(model => Model.InitiatorStatus, "Closed - Delayed")Closed - Delayed<br />
+                        @Html.RadioButtonFor(model => Model.InitiatorStatus, "COMPLITE")On Hold<br />
+
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="4">
+                        <input type="submit" value="Update_Status" name="Submit" class="button" id="btnSubmit" />
+                    </td>
+
+            </table>
+        }
+
+        else if (Session["GalaxyID"].ToString().Contains("tiwaria") && Model.pendingfor.Contains(GalaxyID.ToString()))
+        {
+            <table align="center" style="border:1px solid; border-color:#0099ff ; border-spacing :10px; id=" tblnewproject">
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ProjectNo, "Project No")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:30em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectName, "Project Name")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProposedDate, "Proposed Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProposedDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.DoerName1, "Assiginee")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.DoerName1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.AgreedDate, "Agreed Date Entry")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.AgreedDate, new { style = "width:18em; height:2em;", id = "AgreedDate1" })
+                        @*@Html.ValidationMessageFor(model => model.AgreedDate)*@
+
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td align="center" colspan="4">
+                        <input type="submit" value="Tracking_Start" name="Submit" class="button" id="btnSubmit" />
+                    </td>
+
+            </table>
+
+        }
+
+
+
+
+        else if ((!(string.IsNullOrEmpty(Session["GalaxyID"].ToString()))) && Session["GalaxyID"].ToString().Contains("tiwaria") && Model.pendingfor != Session["GalaxyID"])
+        {
+            <table align="center" border="0" id="tblNewProject">
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ProjectNo, "Project No")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectNo, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>             
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectName, "Project Name")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ProjectDescription, "Project Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectDescription, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedOutput1, "Expected Output")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedOutput1, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.ExpectedTargetDate, "Expected Date")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ExpectedTargetDate, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td valign="top">
+                        @Html.LabelFor(model => model.DoerName, "DoerName")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.DoerName, new { style = "width:18em; height:2em;border:none;", @readonly = "readonly" })
+                    </td>
+                </tr>
+
+
+
+            </table>
+        }
+
+
+
+
+        @******************************************************************************************************************@
+
+
+
+
+    </div>
+    
+
+}
+
+

@@ -1,0 +1,350 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Report For HOD";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <title></title>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+           
+            $('#idDiv').hide();
+            var selected = $('[name="chkstatus"]:checked').val();
+
+            if (selected == "Close") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+                //document.getElementById("FromDate").value = "";
+                //document.getElementById("ToDate").value = "";
+                '<%Session["FromDate"] == "null"; %>';
+            }
+            else if (selected == "Cancel") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+                '<%Session["FromDate"] == "null"; %>';
+            }
+            else $('#idDiv').hide();
+            $(function () {
+
+                $("#FromDate").datepicker({
+                    dateFormat: 'dd-M-yy',
+                    showOn: "button",
+                    buttonText: "DatePicker",
+                    buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+                    buttonImageOnly: true
+                });
+
+                $("#ToDate").datepicker({
+                    dateFormat: 'dd-M-yy',
+                    showOn: "button",
+                    buttonText: "DatePicker",
+                    buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+                    buttonImageOnly: true
+                });
+
+
+            });
+        });
+        function showresult() {
+           
+            var selected = $('[name="chkstatus"]:checked').val();
+
+            if (selected == "Close") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+            }
+            else if (selected == "Cancel") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+            }
+            else $('#idDiv').hide();
+        }
+
+        function validateDates() {
+            try {
+
+                var frmdate = document.getElementById('FromDate').value;
+                var tdate = document.getElementById('ToDate').value;
+
+                var x = document.getElementById("DevComm").checked;
+                if (x == true) {
+                    return true;
+                }
+                if (frmdate != "" && tdate != "") {
+                    return true;
+                }
+                else {
+                    alert('Dates Required.');
+                    return false;
+                }
+            }
+            catch (err) {
+                return false;
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(function () {
+                
+                $('#search').keyup(function () {
+                    searchTable($(this).val());
+                });
+
+            });
+        });
+
+        function showresult() {
+            //debugger;
+            var selected = $('[name="chkstatus"]:checked').val();
+
+            if (selected == "Close") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+            }
+            else if (selected == "Cancel") {
+                $('#idDiv').show();
+                document.getElementById("idDiv").style.display = "";
+            }
+            else $('#idDiv').hide();
+        }
+
+
+        function searchTable(inputVal) {
+            //    debugger
+            var table = $('.table');
+            var index = '8';
+            table.find('tr').each(function (index, row) {
+                var allCells = $(row).find('td');
+                if (allCells.length > 0) {
+                    var found = false;
+                    allCells.each(function (index, td) {
+                        var regExp = new RegExp(inputVal, 'i');
+                        if (regExp.test($(td).text())) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (found == true) $(row).show(); else $(row).hide();
+                }
+            });
+        }
+    </script>
+     
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#idIFromDate").datepicker({
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+                buttonImageOnly: true
+            });
+            $("#idIToDate").datepicker({
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+                buttonImageOnly: true
+            });
+
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+       
+        $('input:radio[name="status"]').change(function () {
+            if ($(this).val() == 'Open') {
+                searchTable('Open');
+                //searchTable('Draft');
+            }
+            else {
+                searchTable($(this).val());
+            }
+        });
+
+    });
+    function searchTable(inputVal) {
+      //  debugger
+        var table = $('.table');
+        table.find('tr').each(function (index, row) {
+            var allCells = $(row).find('td');
+            if (allCells.length > 0) {
+                var found = false;
+                allCells.each(function (index, td) {
+                    var regExp = new RegExp(inputVal, 'i');
+                    if (inputVal == 'Open') {
+                        var regExp1 = new RegExp('On Hold', 'i');
+                        if (regExp.test($(td).text()) || regExp1.test($(td).text())) {
+                            found = true;
+                            return false;
+                        }
+                    }
+                    else {
+                        if (regExp.test($(td).text())) {
+                            found = true;
+                            return false;
+                        }
+                    }
+
+                });
+                if (found == true) $(row).show(); else $(row).hide();
+            }
+        });
+
+    }
+    </script>
+
+    <style type="text/css">
+        .webgrid-table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            width: 100%;
+            display: table;
+            border-collapse: separate;
+            border: solid 0px black;
+            background-color: white;
+        }
+
+            .webgrid-table td, th {
+                border: 1px solid black;
+                padding: 3px 5px 2px;
+                width: auto;
+            }
+
+        .webgrid-header {
+            background-color: #6AAEE4;
+            color: #FFFFFF;
+            padding-bottom: 4px;
+            padding-top: 5px;
+            text-align: left;
+            text-decoration: none;
+        }
+
+        .webgrid-footer {
+        }
+
+        .webgrid-row-style {
+            padding: 3px 7px 2px;
+        }
+
+        .webgrid-alternating-row {
+            padding: 3px 7px 2px;
+        }
+
+        .style1 {
+            grid-column-align: start;
+            grid-row-align: start;
+            width: 200px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .table {
+            margin: 4px;
+            width: 90%;
+            background-color: #DEEBFF;
+        }
+
+        .altRow {
+            background-color: #E4E4E4;
+            color: #000;
+        }
+
+        .selectRow {
+            background-color: #D1DDF1;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .alignCenter {
+            text-align: center;
+        }
+          .alignLeft {
+            text-align: left;
+        }
+    </style>
+
+</head>
+
+<body>
+    @{using (Html.BeginForm("ViewReportDetails", "Initiator", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="topbar">
+            Project Tracking ><span class="graytext">Report</span>
+        </div>
+        <div id="main1">
+            <br />
+            @{
+        var grid = new WebGrid(@Model.ProjectList, canSort: true, rowsPerPage: 25);
+        var gridcolumn = new List<WebGridColumn>();
+            }
+
+            <table width="100%" id="DataTable" align="center">
+               
+                @*<tr>
+                    <td align="center" colspan="2">
+
+                        <div id="divbtnserach">
+                            <input type="text" placeholder="Search..." id="search">
+                            <span><b>From Date:</b></span>
+                            @Html.TextBoxFor(model => model.FromDate, new { id = "idIFromDate", @readonly = "readonly", style = "background: #F7F3F3;width:100px" })
+                            <span><b>To Date:</b></span> @Html.TextBoxFor(model => model.ToDate, new { id = "idIToDate", @readonly = "readonly", style = "background: #F7F3F3;width:100px" })
+                            <input id="btnSearch" type="submit" value="Search" name="Search" class="cancel" onclick="return getSearchResult();" style="width:70px" />                         
+                        </div>
+                    </td>
+                </tr>*@
+                <tr>
+                    <td colspan="2">
+                        <center>
+                            @{
+                        gridcolumn.Add(grid.Column("ProjectNo", "Project No", canSort: true, style: "alignCenter", format: (item) => new HtmlString(Html.ActionLink((string)(@item.ProjectNo).ToString(), "ViewReportDetails", new { id = item.ProjectNo }).ToString())));
+                        gridcolumn.Add(grid.Column("ProjectCategory", "Project Category", canSort: true, style: "alignLeft", format: (item => @item.ProjectCategory.ToString())));
+                        gridcolumn.Add(grid.Column("ProjectName", "Project Name", canSort: true, style: "alignLeft", format: (item => @item.ProjectName.ToString())));
+                        gridcolumn.Add(grid.Column("ProjectDescription", "Project Description", canSort: true, style: "alignLeft", format: (item => @item.ProjectDescription.ToString())));
+                        gridcolumn.Add(grid.Column("ExpectedOutput", "Expected Output", canSort: true, style: "alignLeft", format: (item => @item.ExpectedOutput.ToString())));
+                        gridcolumn.Add(grid.Column("AddedBy", "Added By", canSort: true, style: "alignLeft", format: (item => @item.AddedBy.ToString())));
+                        gridcolumn.Add(grid.Column("ExpectedTargDat", "Expected Date", canSort: true, style: "alignLeft", format: (item => @item.ExpectedTargetDate.ToString())));
+                        gridcolumn.Add(grid.Column("RequestDate", "Request Date", canSort: true, style: "left-align; Width:100%", format: (item => @item.RequestOn.ToString())));
+                        gridcolumn.Add(grid.Column("ProposedDate", "Proposed Date", canSort: true, style: "alignLeft", format: (item => @item.ProposedDate.ToString())));
+                        gridcolumn.Add(grid.Column("AgreedDate", "Agreed Date", canSort: true, style: "alignLeft", format: (item => @item.AgreedDate.ToString())));                        
+                        gridcolumn.Add(grid.Column("CompletdOn", "Completd On", canSort: true, style: "left-align; Width:100%", format: (item => @item.ComletedOn.ToString())));
+                        gridcolumn.Add(grid.Column("Assignee", "Assignee", canSort: true, style: "alignLeft", format: (item => @item.DoerName1.ToString())));
+                        // gridcolumn.Add(grid.Column("DoerName", "DoerName", canSort: true, style: "alignCenter", format: (item => @item.DoerName1.ToString())));
+                        gridcolumn.Add(grid.Column("Pendingfor", "Pendingfor", canSort: true, style: "alignLeft", format: (item => @item.pendingfor.ToString())));
+                        gridcolumn.Add(grid.Column("Status", "Status", canSort: true, style: "alignLeft", format: (item => @item.Status.ToString())));
+                        gridcolumn.Add(grid.Column("Ontime%", "Ontime%", canSort: true, style: "alignLeft", format: (item => @item.OntimePer.ToString())));
+                        @grid.GetHtml(tableStyle: "table",
+            headerStyle: "heading",
+            alternatingRowStyle: "altRow",
+            selectedRowStyle: "selectRow",
+            htmlAttributes: new { id = "grid" },
+            columns: grid.Columns(gridcolumn.ToArray()));
+                            }
+                        </center>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model => Model.EmpCode)
+                        @Html.HiddenFor(model => Model.GalaxyID)
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    }
+    }
+</body>
+</html>
+

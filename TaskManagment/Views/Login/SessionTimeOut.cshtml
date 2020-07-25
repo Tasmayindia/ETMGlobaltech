@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = null;
+}
+
+<link href="@Url.Content("~/Content/css/commonStyles.css")" rel="stylesheet" type="text/css" />
+<div class="panel" style="margin:10% 3%;">
+    <div class="panel-body">
+        <h2 class="panel-heading" style="color:white;text-align:center;">Error</h2>
+        <h4 style="text-align:center;">@ViewBag.AlertMessage</h4>
+        <h3 style="text-align:center;"><a onclick="@("window.location.href='../Login/Login'");" style="cursor:pointer;color:blue;font-weight:600;">Go back to home..!</a></h3>
+    </div>
+</div>
+

@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7154CA08-9277-45FC-BDA0-6837D73983C4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TaskManagment</RootNamespace>
+    <AssemblyName>TaskManagment</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.69.1.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Datta Udamale\Desktop\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\..\QMS Project\QMS\QMS\bin\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\QMS Project\QMS\QMS\bin\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\..\QMS Project\QMS\QMS\bin\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\..\QMS Project\QMS\QMS\bin\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\..\QMS Project\QMS\QMS\bin\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\AjaxCss.css" />
+    <Content Include="Content\css\ajaxTab.css" />
+    <Content Include="Content\css\Common.css" />
+    <Content Include="Content\css\commonStyles.css" />
+    <Content Include="Content\css\Frozecol.css" />
+    <Content Include="Content\css\Frozecol_RFQ.css" />
+    <Content Include="Content\css\PDStyles.css" />
+    <Content Include="Content\css\PPMSAdmin.css" />
+    <Content Include="Content\css\ppmsCss.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\tableftI.gif" />
+    <Content Include="Content\css\tabrightI.gif" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\1.png" />
+    <Content Include="Content\images\2.png" />
+    <Content Include="Content\images\3.png" />
+    <Content Include="Content\images\4.png" />
+    <Content Include="Content\images\ActionList.jpg" />
+    <Content Include="Content\images\Add image.jpg" />
+    <Content Include="Content\images\Addr.png" />
+    <Content Include="Content\images\aroww-up.png" />
+    <Content Include="Content\images\ban.jpg" />
+    <Content Include="Content\images\Bar.png" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\btn_Ok_blu.gif" />
+    <Content Include="Content\images\buttonBg.gif" />
+    <Content Include="Content\images\calender1.png" />
+    <Content Include="Content\images\calendericon.png" />
+    <Content Include="Content\images\checkbox_full32_opt.png" />
+    <Content Include="Content\images\circle_green.ico" />
+    <Content Include="Content\images\collapse_blue.jpg" />
+    <Content Include="Content\images\commonStyles.css" />
+    <Content Include="Content\images\converterPDF.jpg" />
+    <Content Include="Content\images\converterPDF4.jpg" />
+    <Content Include="Content\images\Delete.jpg" />
+    <Content Include="Content\images\Dept1.png" />
+    <Content Include="Content\images\Download.png" />
+    <Content Include="Content\images\EmptyStar.png" />
+    <Content Include="Content\images\Excel-1.png" />
+    <Content Include="Content\images\Excel.png" />
+    <Content Include="Content\images\expand_blue.jpg" />
+    <Content Include="Content\images\FilledStar.png" />
+    <Content Include="Content\images\footerLeft.gif" />
+    <Content Include="Content\images\footerRight.gif" />
+    <Content Include="Content\images\forward-icon.png" />
+    <Content Include="Content\images\global-autotech.png" />
+    <Content Include="Content\images\green.GIF" />
+    <Content Include="Content\images\grid_add.gif" />
+    <Content Include="Content\images\grid_cancel.gif" />
+    <Content Include="Content\images\grid_edit.gif" />
+    <Content Include="Content\images\grid_save.gif" />
+    <Content Include="Content\images\grid_update.gif" />
+    <Content Include="Content\images\Home.png" />
+    <Content Include="Content\images\image001.gif" />
+    <Content Include="Content\images\images.jpg" />
+    <Content Include="Content\images\last_opt.jpg" />
+    <Content Include="Content\images\last_opt1.jpg" />
+    <Content Include="Content\images\linkedin.png" />
+    <Content Include="Content\images\list.gif" />
+    <Content Include="Content\images\list.png" />
+    <Content Include="Content\images\loginBanner.gif" />
+    <Content Include="Content\images\minus.gif" />
+    <Content Include="Content\images\minusicon.png" />
+    <Content Include="Content\images\next_icon.gif" />
+    <Content Include="Content\images\otp.png" />
+    <Content Include="Content\images\PDFLogo_New.jpg" />
+    <Content Include="Content\images\plus.gif" />
+    <Content Include="Content\images\plus.jpg" />
+    <Content Include="Content\images\plusicon.png" />
+    <Content Include="Content\images\prev_icon.gif" />
+    <Content Include="Content\images\Processing.gif" />
+    <Content Include="Content\images\Project1.png" />
+    <Content Include="Content\images\red.GIF" />
+    <Content Include="Content\images\refresh3.jpg" />
+    <Content Include="Content\images\SavedStar.png" />
+    <Content Include="Content\images\search.jpg" />
+    <Content Include="Content\images\select.gif" />
+    <Content Include="Content\images\SML3.png" />
+    <Content Include="Content\images\TeamLeader.gif" />
+    <Content Include="Content\images\TL.ico" />
+    <Content Include="Content\images\TL.png" />
+    <Content Include="Content\images\training.jpg" />
+    <Content Include="Content\images\Update.png" />
+    <Content Include="Content\images\upload.jpg" />
+    <Content Include="Content\images\uploading.gif" />
+    <Content Include="Content\images\uploading1.gif" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\Responsive.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Themes\base\jquery-ui.css" />
+    <Content Include="Content\Themes\image1\1.png" />
+    <Content Include="Content\Themes\image1\2.png" />
+    <Content Include="Content\Themes\image1\3.png" />
+    <Content Include="Content\Themes\image1\4.png" />
+    <Content Include="Content\Themes\image1\ActionList.jpg" />
+    <Content Include="Content\Themes\image1\Add image.jpg" />
+    <Content Include="Content\Themes\image1\aroww-up.png" />
+    <Content Include="Content\Themes\image1\ban.jpg" />
+    <Content Include="Content\Themes\image1\bg.gif" />
+    <Content Include="Content\Themes\image1\btn_Ok_blu.gif" />
+    <Content Include="Content\Themes\image1\buttonBg.gif" />
+    <Content Include="Content\Themes\image1\calender1.png" />
+    <Content Include="Content\Themes\image1\calendericon.png" />
+    <Content Include="Content\Themes\image1\checkbox_full32_opt.png" />
+    <Content Include="Content\Themes\image1\circle_green.ico" />
+    <Content Include="Content\Themes\image1\collapse_blue.jpg" />
+    <Content Include="Content\Themes\image1\commonStyles.css" />
+    <Content Include="Content\Themes\image1\converterPDF.jpg" />
+    <Content Include="Content\Themes\image1\converterPDF4.jpg" />
+    <Content Include="Content\Themes\image1\Delete.jpg" />
+    <Content Include="Content\Themes\image1\Dept1.png" />
+    <Content Include="Content\Themes\image1\Download.png" />
+    <Content Include="Content\Themes\image1\EmptyStar.png" />
+    <Content Include="Content\Themes\image1\expand_blue.jpg" />
+    <Content Include="Content\Themes\image1\FilledStar.png" />
+    <Content Include="Content\Themes\image1\FINAL SIGMA LOGO1.png" />
+    <Content Include="Content\Themes\image1\footerLeft.gif" />
+    <Content Include="Content\Themes\image1\footerRight.gif" />
+    <Content Include="Content\Themes\image1\GalaxySourcing.JPG" />
+    <Content Include="Content\Themes\image1\green.GIF" />
+    <Content Include="Content\Themes\image1\grid_add.gif" />
+    <Content Include="Content\Themes\image1\grid_cancel.gif" />
+    <Content Include="Content\Themes\image1\grid_edit.gif" />
+    <Content Include="Content\Themes\image1\grid_save.gif" />
+    <Content Include="Content\Themes\image1\grid_update.gif" />
+    <Content Include="Content\Themes\image1\HOME11111 copy.jpg" />
+    <Content Include="Content\Themes\image1\image001.gif" />
+    <Content Include="Content\Themes\image1\images.jpg" />
+    <Content Include="Content\Themes\image1\innerWeb.jpg" />
+    <Content Include="Content\Themes\image1\innerWeb_logo.gif" />
+    <Content Include="Content\Themes\image1\last_opt.jpg" />
+    <Content Include="Content\Themes\image1\last_opt1.jpg" />
+    <Content Include="Content\Themes\image1\list.gif" />
+    <Content Include="Content\Themes\image1\list.png" />
+    <Content Include="Content\Themes\image1\loginBanner.gif" />
+    <Content Include="Content\Themes\image1\logo.jpg" />
+    <Content Include="Content\Themes\image1\logo2.jpg" />
+    <Content Include="Content\Themes\image1\minus.gif" />
+    <Content Include="Content\Themes\image1\minusicon.png" />
+    <Content Include="Content\Themes\image1\next_icon.gif" />
+    <Content Include="Content\Themes\image1\PDFLogo_New.jpg" />
+    <Content Include="Content\Themes\image1\plus.gif" />
+    <Content Include="Content\Themes\image1\plusicon.png" />
+    <Content Include="Content\Themes\image1\prev_icon.gif" />
+    <Content Include="Content\Themes\image1\Project1.png" />
+    <Content Include="Content\Themes\image1\red.GIF" />
+    <Content Include="Content\Themes\image1\refresh3.jpg" />
+    <Content Include="Content\Themes\image1\SavedStar.png" />
+    <Content Include="Content\Themes\image1\search.jpg" />
+    <Content Include="Content\Themes\image1\select.gif" />
+    <Content Include="Content\Themes\image1\SEMCOLogo.png" />
+    <Content Include="Content\Themes\image1\SemcoLogo1.png" />
+    <Content Include="Content\Themes\image1\SigmaLogo.jpg" />
+    <Content Include="Content\Themes\image1\SigmaLogo_WhiteBG.PNG" />
+    <Content Include="Content\Themes\image1\SML3.png" />
+    <Content Include="Content\Themes\image1\TeamLeader.gif" />
+    <Content Include="Content\Themes\image1\TL.ico" />
+    <Content Include="Content\Themes\image1\training.jpg" />
+    <Content Include="Content\Themes\image1\uploading.gif" />
+    <Content Include="Content\Themes\image1\uploading1.gif" />
+    <Content Include="Content\Themes\jquery-ui.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Help\TaskManagement.pdf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\Project Track.pubxml" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.12.1.js" />
+    <Content Include="Scripts\jquery-1.12.1.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.4.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mainmenu.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeeDetailsController.cs" />
+    <Compile Include="Controllers\InitiatorController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProjectTrackConnController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Decript.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\MailServerInfo.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Shared\Layout.cshtml" />
+    <Content Include="Views\Shared\LayoutLogin.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Initiator\Initiator.cshtml" />
+    <Content Include="Views\Initiator\ViewTransferProject.cshtml" />
+    <Content Include="Views\Initiator\ViewProjects.cshtml" />
+    <Content Include="Views\Initiator\Welcome.cshtml" />
+    <Content Include="Views\Initiator\Help.cshtml" />
+    <Content Include="Views\Initiator\ReportForHOD.cshtml" />
+    <Content Include="Views\Initiator\ViewHODReportDetails.cshtml" />
+    <None Include="Properties\PublishProfiles\Task Managment.pubxml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Views\Initiator\Edit1.cshtml" />
+    <Content Include="Views\Initiator\edit.cshtml" />
+    <Content Include="Views\Login\SessionTimeOut.cshtml" />
+    <Content Include="Template\EmployeeDetails.xlsx" />
+    <Content Include="Template\Admin Manual.pdf" />
+    <Content Include="Template\User Manual.pdf" />
+    <Content Include="Views\EmployeeDetails\Admin.cshtml" />
+    <Content Include="Views\EmployeeDetails\ChangePassword.cshtml" />
+    <Content Include="Views\EmployeeDetails\Create.cshtml" />
+    <Content Include="Views\EmployeeDetails\EmailConfiguration.cshtml" />
+    <Content Include="Views\EmployeeDetails\EmailScheduler.cshtml" />
+    <Content Include="Views\EmployeeDetails\EmployeeList.cshtml" />
+    <Content Include="Views\EmployeeDetails\Upload.cshtml" />
+    <Content Include="Views\EmployeeDetails\Manual.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="DownloadFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="LCC11">
+      <Guid>{EDCD5812-6A06-43C3-AFAC-46EF5D14E22C}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55133</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55137/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

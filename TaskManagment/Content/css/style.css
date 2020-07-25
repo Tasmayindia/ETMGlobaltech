@@ -1,0 +1,13 @@
+body {
+  font-family: Verdana, Geneva, Arial, helvetica, sans-serif; background:#0185b2;
+}
+
+#loginbox {
+width:516px; margin: 0 auto; border:5px solid #c3d9EA; background:#FFF; padding:0;
+}
+.brder{ border:5px solid #c3d9EA; }
+#loginbox span{width:450px; font-size:11px; color:#126db5; padding-left:10px; font-weight:bold; line-height:18px; text-align:center;}
+.textbold{font-size:11px; color:#000000; font-weight:bold;}
+.search{border:1px solid #DADADA;}
+#logininnerbox{ width:350px; margin: 0 auto; font-weight:bold; font-size:11px;}
+#input{width:300px; float:right; margin-top:-10px;}

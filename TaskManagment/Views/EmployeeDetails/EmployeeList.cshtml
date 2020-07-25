@@ -1,0 +1,111 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "EmployeeList";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/Responsive.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                //debugger
+                $('#search').keyup(function () {
+                    searchTable($(this).val());
+                });
+
+            });
+        });
+        function searchTable(inputVal) {
+            var table = $('.table');
+            var index = '8';
+            table.find('tr').each(function (index, row) {
+                var allCells = $(row).find('td');
+                if (allCells.length > 0) {
+                    var found = false;
+                    allCells.each(function (index, td) {
+                        var regExp = new RegExp(inputVal, 'i');
+                        if (regExp.test($(td).text())) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (found == true) $(row).show(); else $(row).hide();
+                }
+            });
+        }
+    </script>
+    
+</head>
+<body>
+    <div class="panel panel-default" style="margin-top:8px;">
+        <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Employee List</b></center></div>
+        @{using (Html.BeginForm("EmployeeList", "EmployeeDetails", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @*<div style="font-size:14px;" align="right"><button class="btn btn-info">@Html.ActionLink("Upload Employee Details", "Upload", "Employee", null, new { })</button></div>*@
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-6" style="margin-left:-14px;">
+                                <input type="text" class="form-control" placeholder="Search..." id="search" style="width:215px;display:inline-block;">
+                            </div>
+               
+                            <div class="col-lg-6" align="right">
+                                <a href='@Url.Action("Upload","EmployeeDetails",new { })' title="Upload Employee Details"><img src="~/Content/images/upload.jpg" style="width: 30px;" /></a>
+                                &nbsp;&nbsp;<a href='@Url.Action("Create","EmployeeDetails",new { })' title="Add Employee"><img src="~/Content/images/plus.jpg" style="width: 30px;" /></a>
+                                &nbsp;&nbsp;<a href='@Url.Action("ExportToExcel", "EmployeeDetails", new { })' title="Export To Excel"><img src="~/Content/images/Excel.png" style="width:24px;" /></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+
+                            <table class="table table-striped table-bordered dt-responsive nowrap">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:36px;">Sr.No</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:73px;">Emp Code</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:120px;">Name</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:84px;">Department</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:73px;">Mobile No</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:114px;">Reporting Manager</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:120px;">Email</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:52px;">Disabled</th>
+                                        <th scope="col" style="background-color:#f07b36;color:white;width:64px;">Actions</th>
+
+                                    </tr>
+                                <thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.EmployeeList.Count; i++)
+                                    {
+                                        var j = i + 1;
+                                        <tr>
+                                            <td data-label="Sr.No:"> @j </td>
+                                            <td data-label="Emp Code:"> @Model.EmployeeList[i].EmpCode </td>
+                                            <td data-label="Name:"> @Model.EmployeeList[i].DisplayName </td>
+                                            <td data-label="Department:"> @Model.EmployeeList[i].Department </td>
+                                            <td data-label="Mobile No:"> @Model.EmployeeList[i].Mobile </td>
+                                            <td data-label="Reporting Manager:">@if (Model.EmployeeList[i].Manager != ""){@Model.EmployeeList[i].Manager }else{<span>-</span>}</td>
+                                            <td data-label="Email:"> @Model.EmployeeList[i].EMail </td>
+                                            <td data-label="Is Disable:">@if (Model.EmployeeList[i].IsDisable == true) { <span>Yes</span> } else { <span>No</span>}</td>
+                                            <td data-label="Action:">
+                                                <a href='@Url.Action("Edit","EmployeeDetails",new {EmpCode=Model.EmployeeList[i].EmpCode},null)'><img src="~/Content/images/Update.png" title="Update" style="width: 25px;height: 25px;margin-top: -8px;margin-left: -5px;" /></a>
+                                                <a href='@Url.Action("Delete","EmployeeDetails",new {EmpCode=Model.EmployeeList[i].EmpCode},null)'><img src="~/Content/images/Delete.jpg" title="Delete" style="width: 25px;height: 25px;margin-top: -8px;" /></a>
+                                                <a href='@Url.Action("SendPassword","EmployeeDetails",new {EmpCode=Model.EmployeeList[i].EmpCode,Email=Model.EmployeeList[i].EMail},null)'><img src="~/Content/images/otp.png" title="Reset Password" style="width: 25px;height: 25px;margin-top: -8px;" /></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                            @Html.HiddenFor(model => Model.EmpCode)
+                            @Html.HiddenFor(model => Model.GalaxyID, new { id = "GalaxyID" })
+                            @Html.HiddenFor(model => Model.GalaxyIDName, new { id = "GalaxyIDName" })
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</body>
+</html>

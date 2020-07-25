@@ -1,0 +1,161 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "Email Scheduler";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.4.js"></script>
+<script>
+    var $jq = jQuery.noConflict();
+</script>
+<script>
+    $jq(document).ready(function ()
+    {
+        $jq("#TaskStatus").hide();
+        $jq("#ProposedDate").hide();
+        $jq("#divFirstReminder").hide();
+        $jq("#divRepeatReminder").hide();
+    });
+    function OnSubmit()
+     {
+       var Application = document.getElementById("Application").value;
+       if (Application != "")
+       { 
+       $("#divLoading").show();
+        var ajaxLoading = "<img id='ajax-loader' src='@Url.Content("~/Content/images/Processing.gif")' align='center' height='100' width='100'>";
+       $("#divLoading").html("<p style='position: absolute; top: 43%; left: 48%; color:  #666666;'>" + ajaxLoading + "</p>");
+       }    
+
+    };
+    function ApplicationSelect()
+    {
+        var Application = $jq("#Application").val();
+        if (Application != "")
+        {
+            $jq("#TaskStatus").show();
+            $jq("#ProposedDate").show();
+            $jq("#divFirstReminder").show();
+            $jq("#divRepeatReminder").show();
+
+            var url = '@Url.Content("~/")' + "EmployeeDetails/GetSchedulerDetails";
+            $jq.post(url, { Application: Application }, function (data) {
+                if (data)
+                {
+                    $jq("#FirstReminder").val(data.FirstReminder);
+                    $jq("#SecondReminder").val(data.SecondReminder);
+                    $jq("#RepeatReminder").val(data.RepeatReminder);
+                }
+            });
+        } else
+        {
+            $jq("#TaskStatus").hide();
+            $jq("#ProposedDate").hide();
+            $jq("#divFirstReminder").hide();
+            $jq("#divRepeatReminder").hide();
+        } 
+    };
+</script>
+<div class="panel panel-default" style="margin-top:8px;">
+
+    <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Email Scheduler</b></center></div>
+
+
+    @{using (Html.BeginForm("EmailScheduler", "EmployeeDetails", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-2">
+                <label for="Application" class="col-form-label">Application: <span style="color:red;font-weight:bold;font-size:18px;">*</span></label>
+            </div>
+            <div class="col-lg-4">
+                @Html.DropDownListFor(model => model.Application, @Model.ApplicationList, "", new { @class = "form-control", @style = "display:inline-block;",@onchange= "ApplicationSelect();" })
+                <br>
+                @Html.ValidationMessageFor(model => model.Application, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="" class="col-form-label">Business Logic For Email Reminder</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="" class="col-form-label">Criteria</label>
+            </div>
+        </div>
+        <br>
+        <div class="row" id="TaskStatus">
+            <div class="col-lg-2">
+                <label for="TaskStatus" class="col-form-label">Task Status :</label>
+            </div>
+            <div class="col-lg-4">
+                @Html.TextBoxFor(model => model.TaskStatus, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Pending", @readonly = "readonly" })
+
+            </div>
+
+        </div>
+        <br>
+        <div class="row" id="ProposedDate">
+            <div class="col-lg-2">
+                <label for="ProposedDate" class="col-form-label">Proposed Date :</label>
+            </div>
+            <div class="col-lg-4">
+                @Html.TextBoxFor(model => model.TaskStatus, new { @class = "form-control", @style = "display:inline-block;", @placeholder = "Days After", @readonly = "readonly" })
+
+            </div>
+
+        </div>
+        <br>
+        <div class="row" id="divFirstReminder">
+            <div class="col-lg-2">
+                <label for="FirstReminder" class="col-form-label">First Reminder After: </label>
+            </div>
+            <div class="col-lg-4">
+                @Html.TextBoxFor(model => model.FirstReminder, new { @class = "form-control", @style = "display:inline-block;" })
+
+            </div>
+            <div class="col-lg-2">
+                <label for="SecondReminder" class="col-form-label">Second Reminder After:</label>
+            </div>
+            <div class="col-lg-4">
+                @Html.TextBoxFor(model => model.SecondReminder, new { @class = "form-control", @style = "display:inline-block;" })
+            </div>
+
+        </div>
+        <br>
+        <div class="row" id="divRepeatReminder">
+            <div class="col-lg-2">
+                <label for="RepeatReminder" class="col-form-label">Repeat Reminder After:</label>
+            </div>
+            <div class="col-lg-4">
+                @Html.TextBoxFor(model => model.RepeatReminder, new { @class = "form-control", @style = "display:inline-block;" })
+
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12" align="center">
+
+                <input type="submit" name="Submit" value="Submit" class="btn btn-info" onclick="OnSubmit();">
+                <button class="btn btn-info"> @Html.ActionLink("Back", "EmployeeDetails", new { Back = "AdminBack" }, new { @style = "color:white;" })</button>
+
+            </div>
+        </div>
+    </div>
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.TaskStatus)
+            @Html.HiddenFor(model => Model.EmpCode)
+            @Html.HiddenFor(model => Model.GalaxyID, new { id = "GalaxyID" })
+            @Html.HiddenFor(model => Model.GalaxyIDName, new { id = "GalaxyIDName" })
+        }
+    }
+
+</div>
+<div id="divLoading" style="margin: 0px;padding: 0px; position: fixed; right: 0px;
+  top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;align-content:center;
+  opacity: .8; filter: alpha(opacity=70);display:none;" align="center" margin-top="50%">
+</div>

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Help";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <title></title>
+    </head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @*@Html.ValidationSummary(true)*@
+        <div id="topbar">
+            Enterprise Task Management> <span class="graytext">Help</span>
+        </div>
+        <div id="main1">
+            <table width="800px" align="center">
+                <tr>
+                    <td>
+                        <iframe height="400px" width="1000px" src="@Url.Content("~/Content/Help/TaskManagement.pdf")"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
+       
+    }
+</body>
+</html>

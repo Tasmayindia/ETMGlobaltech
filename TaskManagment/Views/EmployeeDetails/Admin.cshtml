@@ -1,0 +1,33 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="panel panel-default" style="margin-top:8px;">
+        <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Administrative Actions</b></center></div>
+        <div class="panel-body">
+
+            <div class="row" style="font-size:14px;margin-left:15px;">
+               <div class="col-lg-12">
+                   <center>
+                       <button class="btn btn-info">@Html.ActionLink("Employee Details", "EmployeeList", "EmployeeDetails", null, new { @style = "color:white;" })</button>
+
+                       <button class="btn btn-info">@Html.ActionLink("Email Configuration", "EmailConfiguration", "EmployeeDetails", null, new { @style = "color:white;" })</button>
+
+                       <button class="btn btn-info">@Html.ActionLink("Export All Tasks", "ExportToTask", "EmployeeDetails", null, new { @style = "color:white;" })</button>
+
+                       <button class="btn btn-info">@Html.ActionLink("Email Scheduler", "EmailScheduler", "EmployeeDetails", null, new { @style = "color:white;" })</button>
+                   </center>
+               </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+

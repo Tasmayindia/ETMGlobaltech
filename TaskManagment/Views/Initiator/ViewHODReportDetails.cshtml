@@ -1,0 +1,282 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Report for HOD";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <style type="text/css">
+        .webgrid-table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            font-size: 1.1em;
+            width: 100%;
+            display: table;
+            border-collapse: separate;
+            border: solid 0px black;
+            background-color: white;
+        }
+
+            .webgrid-table td, th {
+                border: 1px solid black;
+                padding: 3px 5px 2px;
+            }
+
+        .webgrid-header {
+            background-color: #6AAEE4;
+            color: #FFFFFF;
+            padding-bottom: 4px;
+            padding-top: 5px;
+            text-align: left;
+            text-decoration: none;
+        }
+
+        .webgrid-footer {
+        }
+
+        .webgrid-row-style {
+            padding: 3px 7px 2px;
+        }
+
+        .webgrid-alternating-row {
+            padding: 3px 7px 2px;
+        }
+
+        .style1 {
+            grid-row-align: center;
+            text-align: left;
+            /*width: 250px;*/
+        }
+
+        .style2 {
+            grid-row-align: center;
+            text-align: left;
+            /*width: 250px;*/
+        }
+
+        .style3 {
+            grid-row-align: center;
+            text-align: center;
+            /*width: 250px;*/
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .alignment {
+            width: 230px;
+            vertical-align: top;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#GetDate").datepicker({
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "@Url.Content("~/Content/images/calendericon.png")",
+                buttonImageOnly: true
+            });
+            $("#expectedtargetdate").attr("readonly", "disabled");
+            $("#expectedtargetdate").datepicker({
+                minDate: -3,
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "/Content/images/calendericon.png",
+                buttonImageOnly: true
+            });
+            $("#ProposedDatedate").datepicker({
+                minDate: -3,
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "/Content/images/calendericon.png",
+                buttonImageOnly: true
+            });
+            $("#AgreedDate").datepicker({
+                minDate: -3,
+                dateFormat: 'dd-M-yy',
+                showOn: "button",
+                buttonText: "DatePicker",
+                buttonImage: "/Content/images/calendericon.png",
+                buttonImageOnly: true
+            });
+        });
+    </script>
+
+
+    <title></title>
+</head>
+<body>
+    @{using (Html.BeginForm("ViewReportDetails", "Initiator", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="topbar">
+            Project Tracking ><span class="graytext">Edit</span>
+        </div>
+        <div id="main1">
+            <br />
+
+            <table width="900" align="center">
+                <tr align="left" class="heading">
+                    <td align="center" colspan="2">
+                        New Project Details  <span style="color: black;font-size:x-small;">  </span>
+                    </td>
+                </tr>
+            </table>
+            <table width="900" align="center">
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Project No :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => Model.ProjectNo)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Project Category :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => Model.ProjectCategory)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment"><b>Assigneer(Initiator)</b> :</td>
+                    <td>
+                        @Html.DisplayFor(model => model.InitiatorName)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment"><b>Assiginee(doer) :</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DoerbyName)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Project Name :</b>
+                        @Html.HiddenFor(model => model.ProjectNo)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ProjectName)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Project Description :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ProjectDescription)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b> ExpectedOutput :</b>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ExpectedOutput1)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Expected Target Date :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ExpectedTargetDate)
+                    </td>
+                </tr>
+
+                <tr style="border:solid">
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Proposed Date :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ProposedDate)
+                    </td>
+                </tr>
+
+
+                <tr style="border:solid">
+                    <td width="10%"></td>
+                    <td class="alignment">
+                        <b>Agreed Date :</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.AgreedDate)
+                    </td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.DoerStatus))
+                {
+                    <tr style="border:solid">
+                        <td width="10%"></td>
+                        <td class="alignment">
+                            <b>Status of Project :(Doer)</b>
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(m => Model.DoerStatus, Model.DoerStatus)
+                            <span> @Model.DoerStatus</span>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(Model.InitiatorStatus))
+                {
+                    <tr style="border:solid">
+                        <td width="10%"></td>
+                        <td class="alignment">
+                            <b>Status of Project :(Initiator)</b>
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(m => Model.InitiatorStatus, Model.InitiatorStatus)
+                            <span> @Model.InitiatorStatus</span>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment"><b>Remark (Track Tress):</b></td>
+                    <td>
+                        @Html.TextAreaFor(model => model.RemarkTrace, new { style = "width:50em; height:5em;", @onclick = "return false", disabled = "disabled" })
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%"></td>
+                    <td class="alignment"></td>
+
+                    <td>
+                        <input type="submit" value="Back" name="Back" class="cancel" />
+                    </td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model => Model.EmpCode)
+                        @Html.HiddenFor(model => Model.GalaxyID)
+                    </td>
+                </tr>
+            </table>
+
+            @Html.HiddenFor(model => model.Role)
+        </div>
+    }
+    }
+      
+</body>
+</html>

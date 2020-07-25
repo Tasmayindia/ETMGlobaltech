@@ -1,0 +1,27 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/LayoutLogin.cshtml";
+}
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div class="login">
+            <div class="panel-heading" style="background-color:#f07b36;color:white;height:37px;"><center><h3 style="margin-top:-3px;">Welcome! Please Log In</h3></center></div>
+            @using (Html.BeginForm("Login", "Login", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div>
+                    <center><p style="color:red;"><b>@ViewBag.errormessage</b></p></center>
+                    @Html.TextBoxFor(m => m.GalaxyID, new { @class = "form-control", placeholder = "User Id" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                    <br />
+                    <center><input type="submit" value="Log In" class="btn btn-info"></center>
+                </div>
+            }
+        </div>
+        <div class="shadow"></div>
+    </body>
+    </html>
+

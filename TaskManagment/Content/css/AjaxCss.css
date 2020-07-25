@@ -1,0 +1,67 @@
+﻿body {
+}
+/* Rating */
+.ratingStar {
+    font-size: 0pt;
+    width: 13px;
+    height: 12px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    display: block;
+    background-repeat: no-repeat;
+}
+
+.filledRatingStar {
+    background-image: url(../images/FilledStar.png);
+
+}
+
+.emptyRatingStar {
+    background-image: url(../images/EmptyStar.png);
+}
+
+.savedRatingStar {
+    background-image: url(../images/SavedStar.png);
+}
+
+.watermarked {
+		color:gray;
+		font-family :Arial ;
+		font-size :xx-small ;
+		
+	padding:2px 0 0 2px;
+	border:1px solid #000000;
+	}
+
+        .ajax__calendar .ajax__calendar_body .ajax__calendar_invalid .ajax__calendar_day {  
+        color:red; text-decoration:line-through; cursor:pointer; background-color :LightBlue;
+        } 
+        .ajax__calendar .ajax__calendar_body .ajax__calendar_invalid  {  
+        color:red; text-decoration:line-through; cursor:pointer; background-color :LightBlue;
+        } 
+        .ajax__calendar .ajax__calendar_container {
+        border:1px solid #646464;
+        background-color:LightSkyBlue;
+        color: black;
+        }
+        .ajax__calendar_days .ajax__calendar_other .ajax__calendar_day ,
+        .ajax__calendar_days .ajax__calendar_other .ajax__calendar_year {
+        color: black;background-color :LightBlue;
+        }
+        .ajax__calendar_days .ajax__calendar_hover .ajax__calendar_day,
+        .ajax__calendar_days .ajax__calendar_hover .ajax__calendar_month,
+        .ajax__calendar_days .ajax__calendar_hover .ajax__calendar_year {
+        color: black;
+        }
+        .ajax__calendar_days .ajax__calendar_active .ajax__calendar_day,
+        .ajax__calendar_days .ajax__calendar_active .ajax__calendar_month,
+        .ajax__calendar_days .ajax__calendar_active .ajax__calendar_year {
+        color: black;
+        font-weight:bold;
+        }
+        .ajax__calendar .ajax__calendar_today .ajax__calendar_day {
+        font-weight:bold;
+        color :blue;
+        }
+         

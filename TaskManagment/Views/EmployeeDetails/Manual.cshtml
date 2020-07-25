@@ -1,0 +1,36 @@
+﻿@model TaskManagment.Models.Employee
+@{
+    ViewBag.Title = "Manual";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/Responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="panel panel-default" style="margin-top:8px;">
+        <div style="font-size:18px;color:black;margin-top:5px;"><center><b>Manual</b></center></div>
+        <div class="panel-body">
+            <div class="row" style="font-size:14px;margin-left:15px;">
+                <div class="col-lg-12">
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        
+                            <iframe height="480px" width="1050px" src="@Url.Content("~/Template/Admin Manual.pdf")"></iframe>
+                       
+                    }
+                    else
+                    {
+                        
+                            <iframe height="480px" width="1050px" src="@Url.Content("~/Template/User Manual.pdf")"></iframe>
+                         
+                     }
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+</body>
+</html>
+

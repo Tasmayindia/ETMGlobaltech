@@ -1,0 +1,139 @@
+﻿
+
+.tbl
+{
+	background:white;
+	height:440px;	
+	width:100%;
+	font-size:11px; font-family:verdana;	
+	
+}
+.ddl
+{
+	border:1px solid #000000; font-size:11px; font-family:verdana;
+	
+}
+
+.chklist
+{
+	font-size:11px; font-family:verdana;
+}
+.lstbox
+{
+	font-size:11px; font-family:verdana;
+}
+
+
+.txt
+{
+	border:1px solid #000000; font-size:11px; font-family:verdana;
+	
+}
+
+.rd
+{
+	height:17px;
+	 font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-align: left;
+}
+
+.modalPopup 
+{
+	background-color:White;
+	border-width:3px;
+	filter:alpha(opacity=110);
+	opacity:1.1;
+	border-style:solid;
+	border-color:Gray;
+	padding:3px;
+	width:450px;
+	height:200px;
+}
+.modalBackground
+ {
+	background-color:gray;
+	filter:alpha(opacity=70);
+	opacity:0.7;
+}
+.fieldset 
+{ 
+	-moz-border-radius: 1em; 
+	border: 2px groove threedface;
+	border-radius:1em;
+	
+} 
+
+.BackButton
+{
+	background-image:url(../images/btn4.jpg);
+	text-align:center;
+	vertical-align:middle;        	
+	height:28px;
+	width:175px;
+}
+
+
+.btn
+	{
+	background:url(../images/buttonBg.gif) repeat-x; color:#FFFFFF; font-family:verdana; border:1px solid #08286A; font-weight:bold; font-size:11px;
+	}
+
+
+.mGrid td
+{
+	padding: 2px;
+	border: solid 1px #c1c1c1;
+	color: #717171;
+}
+.mGrid th
+{
+	padding: 4px 2px;
+	color: #fff;
+	background: #424242 url(../images/grd_head.png) repeat-x top;
+	
+	
+	border-left: solid 1px #525252;
+	font-size: 0.9em;
+}
+
+.mGrid .alt
+{
+	background: #fcfcfc url(../images/grd_alt.png) repeat-x top;
+}
+.mGrid .pgr
+{
+	background: #424242 url(../images/grd_pgr.png) repeat-x top;
+}
+.mGrid .pgr table
+{
+	margin: 5px 0;
+}
+.mGrid .pgr td
+{
+	border-width: 0;
+	padding: 0 6px;
+	border-left: solid 1px #666;
+	font-weight: bold;
+	color: #fff;
+	line-height: 12px;
+}
+.mGrid .pgr a
+{
+	color: #666;
+	text-decoration: none;
+}
+.mGrid .pgr a:hover
+{
+	color: #000;
+	text-decoration: none;
+}
+
+.heading
+{
+    background-color: #6AAEE4;
+    height: 24px;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 11px;
+}

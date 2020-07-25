@@ -1,0 +1,47 @@
+﻿@model TaskManagment.Models.Request
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<html>
+<head>
+
+    <title></title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+
+        <div id="topbar">
+            Project Track > <span class="graytext">Welcome</span>
+        </div>
+        <div id="main1">
+            <table align="center">
+                <tr>
+                    <td>
+                        <fieldset id="Fieldset2" style="height: 65px; width: 730px;">
+
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <h3>Welcome To Project Track System !!!</h3>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model=> Model.EmpCode)
+                        @Html.HiddenFor(model => Model.GalaxyID)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    }
+
+</body>
+</html>
